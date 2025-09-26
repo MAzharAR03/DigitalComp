@@ -15,6 +15,13 @@ public class Transaction {
         this.datetime = LocalDateTime.now().format(myFormatObj);
     }
 
+    public Transaction(String username, double amount, String note, String datetime) {
+        this.username = username;
+        this.amount = amount;
+        this.note = note;
+        this.datetime = datetime;
+    }
+
     public double getAmount(){
         return amount; }
     public String getTimestamp() {

@@ -1,5 +1,8 @@
+import java.sql.Array;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+
 
 public class TransactionModel extends Model{
     TransactionModel(){
@@ -56,6 +59,37 @@ public class TransactionModel extends Model{
             }
         }
         return balance;
+    }
+
+    public ArrayList<Transaction> fetchTransactions(String username){
+        ArrayList<Transaction> transactions = new ArrayList<>();
+        ResultSet rs = null;
+        try{
+            connect();
+            String query = "SELECT * FROM Transactions WHERE Username =?";
+            s = c.prepareStatement(query);
+            s.setString(1,username);
+            rs = s.executeQuery();
+            while(rs.next()){
+                transactions.add(new Transaction(
+                        rs.getString("Username"),
+                        rs.getDouble("Amount"),
+                        rs.getString("DateTime"),
+                        rs.getString("Note")));
+            }
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } finally {
+            try{
+                try { if (rs != null) rs.close(); } catch (SQLException ignored) {}
+                s.close();
+                c.close();
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+        }
+        return transactions;
     }
 
     public static void main(String[] args){
