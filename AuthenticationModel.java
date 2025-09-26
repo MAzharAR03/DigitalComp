@@ -1,11 +1,14 @@
 import java.sql.ResultSet;
- class AuthenticationModel extends Model{
+import java.sql.SQLException;
+
+class AuthenticationModel extends Model{
     AuthenticationModel() {
         super();
     }
 
-    public boolean verify(String username) {
+    public boolean verifyUsername(String username) {
         try {
+
             connect();
             String query = "SELECT Username FROM Authentication";
             s = c.prepareStatement(query);
@@ -29,6 +32,30 @@ import java.sql.ResultSet;
          }
      }
         return true;
+    }
+
+    public boolean verifyPassword(String password)  {
+        try {
+            connect();
+            String query = "SELECT Password FROM Authentication";
+            s = c.prepareStatement(query);
+            ResultSet rs = s.executeQuery();
+            while (rs.next()) {
+                if (password.equals(rs.getString("Password")))
+                    return false;
+            }
+            return true;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } finally {
+            try {
+                s.close();
+                c.close();
+            } catch (Exception e) {
+                System.err.println(e.getClass().getName() + ": " + e.getMessage());
+                System.exit(0);
+            }
+        }
     }
 
     public void register (User user){
@@ -56,8 +83,10 @@ import java.sql.ResultSet;
 
     public static void main(String[] args){
         User test = new User("a","b","c");
+
         AuthenticationModel am = new AuthenticationModel();
-        if(am.verify(test.getUsername()))
+        System.out.println(am.verifyPassword("password"));
+        if(am.verifyUsername(test.getUsername()))
             am.register(test);
     }
 }
