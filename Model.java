@@ -16,7 +16,6 @@ public class Model {
         try{
             Class.forName("org.sqlite.JDBC");
             c = DriverManager.getConnection(path);
-            System.out.println("Opened database successfully.");
             c.setAutoCommit(false);
 
         }catch(Exception e){

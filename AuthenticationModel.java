@@ -34,17 +34,18 @@ class AuthenticationModel extends Model{
         return true;
     }
 
-    public boolean verifyPassword(String password)  {
+    public boolean login(String username, String password)  {
         try {
             connect();
-            String query = "SELECT Password FROM Authentication";
+            String query = "SELECT Password FROM Authentication WHERE Username = ?";
             s = c.prepareStatement(query);
+            s.setString(1,username);
             ResultSet rs = s.executeQuery();
             while (rs.next()) {
                 if (password.equals(rs.getString("Password")))
-                    return false;
+                    return true;
             }
-            return true;
+            return false;
         } catch (SQLException e) {
             throw new RuntimeException(e);
         } finally {
@@ -85,7 +86,7 @@ class AuthenticationModel extends Model{
         User test = new User("a","b","c");
 
         AuthenticationModel am = new AuthenticationModel();
-        System.out.println(am.verifyPassword("password"));
+        System.out.println(am.login("jon","jenis"));
         if(am.verifyUsername(test.getUsername()))
             am.register(test);
     }
