@@ -23,7 +23,7 @@ public class Input {
         }
     }
 
-    public static float readFloat(String prompt) {
+    public static double readDouble(String prompt) {
         while (true) {
             System.out.print(prompt);
             String input = scanner.nextLine().trim();

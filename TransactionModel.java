@@ -92,6 +92,29 @@ public class TransactionModel extends Model{
         return transactions;
     }
 
+    public ArrayList<String> fetchUserList()  {
+        ArrayList<String> userlist = new ArrayList<>();
+        try {
+            connect();
+            String query = "Select username from Authentication";
+            s = c.prepareStatement(query);
+            ResultSet rs = s.executeQuery();
+            while(rs.next()){
+                userlist.add(rs.getString("Username"));
+            }
+        }catch(SQLException e){
+            throw new RuntimeException(e);
+        } finally {
+        try{
+            s.close();
+            c.close();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }return userlist;
+
+    }
+
     public static void main(String[] args){
         TransactionModel tm = new TransactionModel();
         tm.addTransaction(new Transaction("jon",-100.0,"Broke"));
