@@ -2,40 +2,74 @@
 public class Main {
     public static void main(String[] args) {
 
-        String username = Input.readLine("Enter username:");
-        String name = Input.readLine("Enter name:");
-        String password = Input.readLine("Set password:");
+        AuthenticationModel autheticate = new AuthenticationModel();
+        User currentuser = null;
 
-        User user = new User(username, name, password);
+        while (currentuser == null) {
+            System.out.println("1. Sign Up");
+            System.out.println("2. Login");
+            System.out.println("3. Exit");
 
-        while (true) {
-            System.out.println("--------------- Main Menu -------------");
-            System.out.println("1. View Balance");
-            System.out.println("2. Top-Up Wallet");
-            System.out.println("3. View Transactions");
-            System.out.println("4. Exit");
+            int choice2 = Input.readInt("Choose option: ");
 
-            int choice = Input.readInt("Choose option: ");
-
-            switch (choice) {
+            switch (choice2) {
                 case 1:
+                    String signUp_username = Input.readLine("Enter username:");
+                    String signUp_name = Input.readLine("Enter name:");
+                    String signUp_password = Input.readLine("Set password:");
+
+                    User newuser = new User(signUp_username, signUp_name, signUp_password);
+                    if (!autheticate.verifyUsername(signUp_username)) {
+                        System.out.println("USername taken try another");
+                    } else {
+                        boolean registered = autheticate.register(newuser);
+                        if (registered
+                        ) {
+                            System.out.println("Rigistration successful can login in now");
+                        } else {
+                            System.out.println("Registration failed");
+                        }
+                    }
                     break;
-                    /// testing git hub changes
                 case 2:
-                    float amount = Input.readFloat("Enter top-up amount: ");
-                    String note = Input.readLine("Enter note: ");
-                    break;
+                    String login_username = Input.readLine("Enter username: ");
+                    String login_password = Input.readLine("Enter password:");
 
-                case 3:
-                    System.out.println("--- Transaction History ---");
-                    break;
+                    TransactionModel transact = new TransactionModel();
 
-                case 4:
-                    System.out.println("Goodbye, " + user.getName() + "!");
-                    return;
+                    if (autheticate.login(login_username , login_password)) {
+                        System.out.println("--------------- Main Menu -------------");
+                        System.out.println("1. View Balance");
+                        System.out.println("2. Top-Up Wallet");
+                        System.out.println("3. View Transactions");
+                        System.out.println("4. Exit");
 
-                default:
-                    System.out.println("Invalid option. Try again.");
+                        int choice = Input.readInt("Choose option: ");
+
+                        switch (choice) {
+                            case 1:
+                                float balance = transact.calculateBalance(login_username);
+                                break;
+                            /// testing git hub changes
+                            case 2:
+                                //float amount = Input.readFloat("Enter top-up amount: ");
+                                // String note = Input.readLine("Enter note: ");
+                                break;
+
+                            case 3:
+                                //System.out.println("--- Transaction History ---");
+                                break;
+
+                            case 4:
+                                //System.out.println("Goodbye, " + user.getName() + "!");
+                                return;
+
+                            default:
+                                System.out.println("Invalid option. Try again.");
+                        }
+                    } else {
+                        System.out.println("Credentaials dont exist");
+                    }
             }
         }
     }

@@ -59,7 +59,7 @@ class AuthenticationModel extends Model{
         }
     }
 
-    public void register (User user){
+    public boolean register (User user){
         try{
             connect();
             String query = "INSERT INTO Authentication VALUES (?,?,?)";
@@ -80,6 +80,7 @@ class AuthenticationModel extends Model{
              System.exit(0);
          }
      }
+        return false;
     }
 
     public static void main(String[] args){
