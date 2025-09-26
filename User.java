@@ -1,15 +1,18 @@
 public class User {
-    private final String username;
-    private final String name;
-    private final String password;
-    private final Wallet user_wallet;
+    private String username;
+    private String name;
+    private String password;
 
     public User(String username, String name, String password){
         this.username = username;
         this.name = name;
         this.password = password;
-        this.user_wallet = new Wallet();
+    }
 
+    public User(){
+        username = "";
+        name = "";
+        password = "";
     }
 
     // getters
@@ -19,12 +22,19 @@ public class User {
     public String getName(){
         return name;
     }
-    public Wallet getWallet(){
-        return user_wallet;
-    }
     public String getPassword(){
         return password;
     }
 
+    public void setName(String name) {
+        this.name = name;
+    }
 
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
 }

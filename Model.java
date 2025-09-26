@@ -11,9 +11,7 @@ public class Model {
     Model() {
         path = "jdbc:sqlite:DigitalCompDB.db";
     }
-    
 
-    // testing git hub change
     public void connect(){
         try{
             Class.forName("org.sqlite.JDBC");

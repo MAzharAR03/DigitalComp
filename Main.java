@@ -19,29 +19,15 @@ public class Main {
 
             switch (choice) {
                 case 1:
-                    System.out.println("Your balance: RM " + user.getWallet().getBalance());
                     break;
 
                 case 2:
                     float amount = Input.readFloat("Enter top-up amount: ");
                     String note = Input.readLine("Enter note: ");
-                    if (user.getWallet().topUp(amount, note)) {
-                        System.out.println("Top-up successful!");
-                    } else {
-                        System.out.println("Invalid amount. Top-up failed.");
-                    }
                     break;
 
                 case 3:
                     System.out.println("--- Transaction History ---");
-                    if (user.getWallet().getTransactions().isEmpty()) {
-                        System.out.println("No transactions yet.");
-                    } else {
-                        for (Transaction t : user.getWallet().getTransactions()) {
-                            System.out.println(t.getType() + " RM" + t.getAmount() +
-                                    " (" + t.getNote() + ") at " + t.getTimestamp());
-                        }
-                    }
                     break;
 
                 case 4:
