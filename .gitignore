@@ -4,3 +4,6 @@
 
 # Build output
 out/
+
+#database
+*.db
