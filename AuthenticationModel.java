@@ -80,7 +80,7 @@ class AuthenticationModel extends Model{
              System.exit(0);
          }
      }
-        return false;
+        return true;
     }
 
     public static void main(String[] args){

@@ -6,9 +6,9 @@ public class Main {
         // Console Ui for sign up/ login and
 
         AuthenticationModel autheticate = new AuthenticationModel();
-        User currentuser = null;
+        boolean running = true;
 
-        while (currentuser == null) {
+        while (running) {
             System.out.println("1. Sign Up");
             System.out.println("2. Login");
             System.out.println("3. Exit");
@@ -115,21 +115,25 @@ public class Main {
                                 }
                                 String transferNote = Input.readLine("Enter transfer note: ");
                                 // minus from sender
-                                transact.addTransaction(new Transaction(login_username, -transferAmount, "Transfer to " + recipient + ": " + transferNote));
+                                transact.addTransaction(new Transaction(login_username, -transferAmount, "transfer to " + recipient +": "+transferNote));
                                 //add to recipient
-                                transact.addTransaction(new Transaction(recipient, transferAmount, "Transfer from " + login_username + ": " + transferNote));
+                                transact.addTransaction(new Transaction(recipient, transferAmount, "transfer from " + login_username +": "+transferNote));
 
-                                System.out.println("Transfer successful to " + recipient);
+                                System.out.println("Transfer successful to" + recipient);
                                 break;
                             case 5:
                                 break;
 
                             default:
-                                System.out.println("Invalid option. Try again.");
+                                System.out.println("Try again.");
                         }
                     } else {
                         System.out.println("Credentaials dont exist");
                     }
+                case 3:
+                    System.out.println("exiting");
+                    running =false;
+                    break;
             }
         }
     }
